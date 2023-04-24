@@ -9,7 +9,7 @@ namespace EmarSys_DueDateCalculator
 {
     public static class ServiceFactory
     {
-        public static T GetService<T>() where T : class
+        public static T? GetService<T>() where T : class
         {
             if (typeof(T) == typeof(IDueDateCalculatorService))
             {

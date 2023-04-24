@@ -19,12 +19,12 @@ namespace EmarSys_DueDateCalculator.DueDateCalculator
 
                 if (remainingWorkingHoursThisDay >= remainingTurnaroundTime)
                 {
-                    return resultDateTime.AddHours(remainingTurnaroundTime);
+                    resultDateTime = resultDateTime.AddHours(remainingTurnaroundTime);
+                    remainingTurnaroundTime = 0;
                 }
-
-                if (remainingWorkingHoursThisDay < remainingTurnaroundTime)
+                else if (remainingWorkingHoursThisDay < remainingTurnaroundTime)
                 {
-                    resultDateTime = CalculateNextWorkingDay9HWithSameMinutesAndSeconds(resultDateTime);
+                    resultDateTime = CalculateNextWorkingDayAt9amWithSameMinutesAndSeconds(resultDateTime);
                     remainingTurnaroundTime -= remainingWorkingHoursThisDay + 1;
                 }
             }
@@ -32,17 +32,12 @@ namespace EmarSys_DueDateCalculator.DueDateCalculator
             return resultDateTime;
         }
 
-        private DateTime CalculateNextWorkingDay9HWithSameMinutesAndSeconds(DateTime resultDateTime)
+        private DateTime CalculateNextWorkingDayAt9amWithSameMinutesAndSeconds(DateTime resultDateTime)
         {
-            if (resultDateTime.DayOfWeek == DayOfWeek.Friday)
-            {
-                resultDateTime = resultDateTime.AddDays(3);
-            } else
-            {
-                resultDateTime = resultDateTime.AddDays(1);
-            }
+            resultDateTime = resultDateTime.DayOfWeek == DayOfWeek.Friday ? resultDateTime.AddDays(3) : resultDateTime.AddDays(1);
 
-            return new DateTime(resultDateTime.Year, resultDateTime.Month, resultDateTime.Day, 9, resultDateTime.Minute, resultDateTime.Second);
+            return new DateTime(resultDateTime.Year, resultDateTime.Month,
+                resultDateTime.Day, 9, resultDateTime.Minute, resultDateTime.Second);
         }
     }
 }

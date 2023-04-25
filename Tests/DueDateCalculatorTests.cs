@@ -13,13 +13,12 @@ namespace Tests
             _dueDateCalculatorService = ServiceFactory.GetService<IDueDateCalculatorService>();
         }
 
-        public static IEnumerable<DueDateCalculatorTestCase> GetCalculatorTestCase()
+        public static IEnumerable<DueDateCalculatorTestCase> GetCalculatorTestCases()
         {
             yield return new DueDateCalculatorTestCase()
             {
                 SubmitDate = new DateTime(2023, 04, 24, 9, 0, 0),
                 TurnaroundTime = 8,
-                // TODO ezt átgondolni, hogy pont 8 óra az 17H -e
                 ExpectedCalculationResult = new DateTime(2023, 04, 24, 17, 0, 0) 
             };
 
@@ -66,9 +65,9 @@ namespace Tests
             };
         }
 
-        [TestCaseSource(nameof(GetCalculatorTestCase))]
+        [TestCaseSource(nameof(GetCalculatorTestCases))]
         [Test]
-        public void DueDateCalculatorTest(DueDateCalculatorTestCase testCase)
+        public void DueDateCalculatorTests(DueDateCalculatorTestCase testCase)
         {
             var result = _dueDateCalculatorService.CalculateDueDate(testCase.SubmitDate, testCase.TurnaroundTime);
 
